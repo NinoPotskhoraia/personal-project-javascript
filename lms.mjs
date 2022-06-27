@@ -5,11 +5,12 @@ export default class LMS {
 
     add(subject){
         if(subject instanceof Subject){
-           this.map.set(subject.id, subject.subject);
+           this.map.set(subject.id, subject);
         }else{
             throw new Error('not a valid subject');
         }
-        return this.map.keys();
+        return subject.id;
+        
     }
 
 
@@ -24,8 +25,6 @@ export default class LMS {
     verify(subject){
         if(subject instanceof Subject && this.map.has(subject.id)){
             return true;
-         }else{
-             throw new Error('not a valid subject');
          }
     }
 
@@ -36,7 +35,7 @@ export default class LMS {
              this.map.forEach(subject => {
                 for (let [key, value] of this.map.entries()) {
                     if (value === subject) {
-                      subject.id = key;
+                      subject = {id: subject.id, ...subject};
                     }
                 }
                 arr.push(subject);
