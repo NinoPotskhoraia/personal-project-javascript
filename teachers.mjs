@@ -133,7 +133,7 @@ export default class Teachers{
       }
   
     if (!this.tmap.has(id)) {
-        return null;
+      throw new Error("invalid id")
     }
   
       return {...this.tmap.get(id), id};
@@ -236,11 +236,11 @@ const clara = {
   }
 
 
-const tid = teachers.add(clara);
-const tid2 = teachers.add(kate);
+// const tid = teachers.add(clara);
+// const tid2 = teachers.add(kate);
 // console.log(tid);
 // console.log(tid2);
 // console.log(teachers.read(tid));
 // console.log(teachers.read(tid2));
-console.log(teachers.update(tid, kate));
+// console.log(teachers.update(tid, kate));
 // console.log(teachers.remove(tid));

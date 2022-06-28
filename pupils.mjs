@@ -151,9 +151,9 @@ const karen = {
     ],
     sex:'female'
 }
-const pupils = new Pupils();
-const pupil = pupils.add(james);
-const pupil2 = pupils.add(karen);
+// const pupils = new Pupils();
+// const pupil = pupils.add(james);
+// const pupil2 = pupils.add(karen);
 // console.log(pupil2);
 // console.log(pupil);
 // console.log(pupil.id);

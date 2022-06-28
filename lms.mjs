@@ -8,6 +8,10 @@ export default class LMS {
         }else{
             throw new Error('not a valid subject');
         }
+
+        if(typeof subject.id !== 'string'){
+            throw new TypeError('id must be a string');
+        }
         return subject.id;
         
     }
@@ -46,17 +50,17 @@ export default class LMS {
 }
 
 
-const history = new Subject({
-    title: 'History',
-    lessons: 24
-  });
-  const math = new Subject({
-    title: 'history',
-    lessons:34
-  })
-const lms = new LMS();
-console.log(lms.add(history));
-console.log(lms.add(math));
-// console.log(lms.remove(history));
-console.log(lms.verify(history));
-console.log(lms.readAll());
+// const history = new Subject({
+//     title: 'History',
+//     lessons: 24
+//   });
+//   const math = new Subject({
+//     title: 'history',
+//     lessons:34
+//   })
+// const lms = new LMS();
+// console.log(lms.add(history));
+// console.log(lms.add(math));
+// // console.log(lms.remove(history));
+// console.log(lms.verify(history));
+// console.log(lms.readAll());

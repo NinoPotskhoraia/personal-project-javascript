@@ -1,5 +1,6 @@
 export default class Subject{
     #counter = 0;
+    #id;
     constructor(obj){
         if (obj === undefined) {
             throw new TypeError("parameter is required");
@@ -20,12 +21,13 @@ export default class Subject{
            throw new TypeError("description property must be a string")
         }
         Object.assign(this, obj);
+       this.#id= 'S' + this.#counter++;
 }
 
 
 
 get id(){
-  return ('S' + this.#counter++);
+  return this.#id;
 }
 
         

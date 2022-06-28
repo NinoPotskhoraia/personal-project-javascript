@@ -8,9 +8,13 @@ export default class Groups{
     if (room === undefined || typeof room !== "number") {
          throw new TypeError("invalid parameter");
     }
-
     const id = 'G' + this.#counter++;
-    this.gmap.set(id, {room});
+    const group = {
+        id: id,
+        room: room,
+        pupils:[]     
+      }
+    this.gmap.set(id, group);
     return id;
     }
 
@@ -27,7 +31,6 @@ export default class Groups{
             throw new Error('not a valid pupil');
         }
          const group = this.gmap.get(id);
-         group.pupils = [];
          group.pupils.push(pupil);
          return pupil;
     }
@@ -111,7 +114,7 @@ export default class Groups{
     if(arguments.length){
          throw new Error('function does not recive arguments');}
     
-    return Array.from(this.gmap)
+    return Array.from(this.gmap);
     }
 }
 
@@ -146,20 +149,20 @@ const james = {
     sex:'female'
 }
 
-const pupils = new Pupils();
-const pupil = pupils.add(james);
-const pupil2 = pupils.add(karen);
+// const pupils = new Pupils();
+// const pupil = pupils.add(james);
+// const pupil2 = pupils.add(karen);
 
-const room = 236;
-const groups = new Groups();
-const groupId = groups.add(room);
-console.log(groupId);
+// const room = 236;
+// const groups = new Groups();
+// const groupId = groups.add(room);
+// console.log(groupId);
 
-console.log(groups.update(groupId, {room:238}));
-console.log(groups.addPupil(groupId, pupil));
-console.log(groups.read(groupId));
-console.log(groups.readAll());
-// console.log(groups.removePupil(groupId, pupil.id));
+// console.log(groups.update(groupId, {room:238}));
+// console.log(groups.addPupil(groupId, pupil));
+// console.log(groups.addPupil(groupId, pupil2));
+// console.log(groups.read(groupId));
+// console.log(groups.readAll());
 // const room2 = 237;
 // const groups2 = new Groups();
 // const groupId2 = groups2.add(room2);
