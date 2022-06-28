@@ -29,11 +29,11 @@ export default class Teachers{
 
     if (typeof obj.name !== "object" || Array.isArray(obj.name))  {
       throw new TypeError(" object name must have a type object");
-    }else if(typeof ({name:{first}}=obj) === 'undefined' ||
-    typeof ({name:{first}}=obj) !== 'string'){
+    }else if(typeof obj.name.first === 'undefined' ||
+    typeof obj.name.first !== 'string'){
       throw new Error('object name parameter is invalid');
-    }else if(typeof ({name:{last}}=obj) === 'undefined' ||
-    typeof ({name:{last}}=obj) !== 'string'){
+    }else if(typeof obj.name.last === 'undefined' ||
+    typeof obj.name.last !== 'string'){
       throw new Error('object name parameter is invalid');
     }
 
@@ -57,14 +57,14 @@ export default class Teachers{
       }
 
     if(obj.emails.forEach(email =>{
-      if(email.primary === 'undefined' || typeof(email.primary !== 'boolean')){
+      if(email.primary === 'undefined' || typeof email.primary !== 'boolean'){
        throw new Error('primary property should be true or false');
-      }else if(email.email === 'undefined' || typeof(email.email !== 'string')){
+      }else if(email.email === 'undefined' || typeof email.email !== 'string'){
         throw new Error('email must be a string');
       }
     }));
 
-    if(obj.emails.filter(email => email.hasOwnProperty('primary')).length > 1){
+    if(obj.emails.filter(email => email.primary === true).length > 1){
       throw new Error('there can only be one primary email adress');
     }
 
@@ -80,14 +80,14 @@ export default class Teachers{
       };
 
       if(obj.phones.forEach(phone =>{
-        if(phone.primary === 'undefined' || typeof(phone.primary !== 'boolean')){
+        if(phone.primary === 'undefined' || typeof phone.primary !== 'boolean'){
          throw new Error('primary property should be true or false');
-        }else if(phone.phone === 'undefined' || typeof(phone.phone !== 'string')){
+        }else if(phone.phone === 'undefined' || typeof phone.phone !== 'string'){
           throw new Error('phone number must be a string');
         }
       }));
   
-      if(obj.phones.filter(phone => phone.hasOwnProperty('primary')).length > 1){
+      if(obj.phones.filter(phone => phone.primary === true).length > 1){
         throw new Error('there can only be one primary phone number');
       }
 
@@ -110,15 +110,19 @@ export default class Teachers{
       }
 
     if(obj.subjects.forEach(subject =>{
-      if(subject.subject === 'undefined' || typeof(subject.subject !== 'string')){
+      if(subject.subject === 'undefined' || typeof subject.subject !== 'string'){
        throw new typeError('subject property should be a string');
       }
     }));
   }
 
+
+
+
+
    add(teacher){
     this.#objValidation(teacher);
-    const id = 'T' + this.#counter;
+    const id = 'T' + this.#counter++;
     this.tmap.set(id, teacher);
     return id;
    }
@@ -136,7 +140,7 @@ export default class Teachers{
    }
 
 
-   update(id, update){
+  update(id, update){
 
     this.#objValidation(update);
   if (id === undefined || update === undefined) {
@@ -156,6 +160,8 @@ if (!this.tmap.has(id)) {
         ...teacher,
         ...update
     });
+
+    return id;
    }
 
    remove(id) {
@@ -177,35 +183,64 @@ if (!this.tmap.has(id)) {
 
 const teachers = new Teachers();
 const clara = {
-    "name": {
-      "first": "string",
-      "last": "string"
+    name: {
+      first: "string",
+      last: "string"
     },
-    "dateOfBirth": "string", // format date
-    "emails": [
+    dateOfBirth: "2011-10-10T14:48:00", // format date
+    emails: [
       {
-        "email": "string",
-        "primary": "boolean"
+        email: "string",
+        primary: true
       }
     ],
-    "phones": [
+    phones: [
       {
         "phone": "string",
-        "primary": "boolean"
+        primary: true
       }
     ],
-    "sex": "string", // male or female
-    "subjects": [
+    sex: "string", // male or female
+    subjects: [
       {
-        "subject": "string" // just name property of subject.
+        subject: "string" // just name property of subject.
       }
     ],
-    "description": "string",
+    description: "string"
   };
 
-console.log(teachers.add(clara));
+  const kate =  {
+    name: {
+      first: "kate",
+      last: "mckignon"
+    },
+    dateOfBirth: "2011-10-10T14:48:00", // format date
+    emails: [
+      {
+        email: "string",
+        primary: true
+      }
+    ],
+    phones: [
+      {
+        "phone": "string",
+        primary: true
+      }
+    ],
+    sex: "female", // male or female
+    subjects: [
+      {
+        subject: "math" // just name property of subject.
+      }
+    ]
+  }
+
 
 const tid = teachers.add(clara);
-
-console.log(teachers.read(tid));
-console.log(teachers.remove(tid));
+const tid2 = teachers.add(kate);
+// console.log(tid);
+// console.log(tid2);
+// console.log(teachers.read(tid));
+// console.log(teachers.read(tid2));
+console.log(teachers.update(tid, kate));
+// console.log(teachers.remove(tid));

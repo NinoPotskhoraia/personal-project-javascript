@@ -1,6 +1,5 @@
 export default class Subject{
     #counter = 0;
-    #id = 'S' + this.#counter++;
     constructor(obj){
         if (obj === undefined) {
             throw new TypeError("parameter is required");
@@ -23,20 +22,14 @@ export default class Subject{
         Object.assign(this, obj);
 }
 
+
+
 get id(){
-  return this.#id;
+  return ('S' + this.#counter++);
 }
 
         
 }
-
-// const history = new Subject({
-//     title: 'History',
-//     lessons: 24
-//   });
-
-//   console.log(history);
-
 
 
 

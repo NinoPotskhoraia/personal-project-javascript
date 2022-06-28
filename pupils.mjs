@@ -26,11 +26,11 @@ export default class Pupils{
     
         if (typeof obj.name !== "object" || Array.isArray(obj.name))  {
           throw new TypeError(" object name must have a type object");
-        }else if(typeof ({name:{first}}=obj) === 'undefined' ||
-        typeof ({name:{first}}=obj) !== 'string'){
+        }else if(typeof obj.name.first === 'undefined' ||
+        typeof obj.name.first !== 'string'){
           throw new Error('object name parameter is invalid');
-        }else if(typeof ({name:{last}}=obj) === 'undefined' ||
-        typeof ({name:{last}}=obj) !== 'string'){
+        }else if(typeof obj.name.last === 'undefined' ||
+        typeof obj.name.last !== 'string'){
           throw new Error('object name parameter is invalid');
         }
     
@@ -52,14 +52,14 @@ export default class Pupils{
           };
     
           if(obj.phones.forEach(phone =>{
-            if(phone.primary === 'undefined' || typeof(phone.primary !== 'boolean')){
+            if(phone.primary === 'undefined' || typeof phone.primary !== 'boolean'){
              throw new Error('primary property should be true or false');
-            }else if(phone.phone === 'undefined' || typeof(phone.phone !== 'string')){
+            }else if(phone.phone === 'undefined' || typeof phone.phone !== 'string'){
               throw new Error('phone number must be a string');
             }
           }));
       
-          if(obj.phones.filter(phone => phone.hasOwnProperty('primary')).length > 1){
+          if(obj.phones.filter(phone => phone.primary === true).length > 1){
             throw new Error('there can only be one primary phone number');
           }
     
@@ -72,7 +72,7 @@ export default class Pupils{
  
     add(pupil){
     this.#objValidation(pupil);
-     const id = 'P' + this.#counter;
+     const id = 'P' + this.#counter++;
      this.pmap.set(id, pupil);
      return {id:id, ...pupil};
     }
@@ -108,7 +108,7 @@ export default class Pupils{
          ...update
      });
 
-     return this.pmap;
+     return this.pmap.get(id);
     }
  
     remove(id) {
@@ -121,19 +121,19 @@ export default class Pupils{
 }
 
 const james = {
-    "name": {
+    name: {
       "first": "string",
       "last": "string"
     },
-    "dateOfBirth": "string", // format date
-    "phones": [
+    dateOfBirth: "2011-10-10T14:48:00", // format date
+    phones: [
       {
-        "phone": "string",
-        "primary": "boolean"
+        phone: "string",
+        primary: true
       }
     ],
-    "sex": "string", // male OR female
-    "description": "string"
+    sex: "string", // male OR female
+    description: "string"
   }
 
 
@@ -142,19 +142,23 @@ const karen = {
         first:'karen',
         last:'duham'
     },
-    dateOfBirth:'22/07/1998',
+    dateOfBirth:"2011-10-10T14:48:00",
     phones:[
         {
             phone:"2-030202",
-            primary:'2930213-0'
+            primary:true
         }
     ],
     sex:'female'
 }
 const pupils = new Pupils();
 const pupil = pupils.add(james);
-console.log(pupil);
-console.log(pupil.id);
-console.log(pupils.read(pupil.id));
-// console.log(pupils.remove(pupil.id));
-console.log(pupils.update(pupil.id, karen));
+const pupil2 = pupils.add(karen);
+// console.log(pupil2);
+// console.log(pupil);
+// console.log(pupil.id);
+// console.log(pupil2.id);
+// console.log(pupils.read(pupil.id));
+// console.log(pupils.read(pupil2.id));
+// // console.log(pupils.remove(pupil.id));
+// console.log(pupils.update(pupil.id, karen));
