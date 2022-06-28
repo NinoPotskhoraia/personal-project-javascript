@@ -1,7 +1,3 @@
-import Pupils from "./pupils.mjs";
-import Teachers from "./teachers.mjs";
-import Groups from "./groups.mjs";
-import Subject from "./subject.mjs";
 
 export default class Gradebooks{
      gbmap = new Map();
@@ -48,8 +44,8 @@ export default class Gradebooks{
         typeof record.pupilId === 'undefined' ||
         typeof record.teacherId === 'undefined' ||
         typeof record.subjectId === 'undefined' ||
-        typeof lesson === 'undefined' ||
-        typeof mark === 'undefined'
+        typeof record.lesson === 'undefined' ||
+        typeof record.mark === 'undefined'
       ) {
         throw new Error('object parameters are invalid');
       }
@@ -66,17 +62,30 @@ export default class Gradebooks{
       return record;
     }
 
-    // read(id, pupilId){
-    //   if (id === undefined || typeof id !== "string") {
-    //     throw new TypeError("invalid id");
-    //   }
+    read(id, pupilId){
+      if (id === undefined || typeof id !== "string") {
+        throw new TypeError("invalid id");
+      }
   
-    // if (!this.gbmap.has(id)) {
-    //   throw new Error("invalid id");
-    // }
+    if (!this.gbmap.has(id)) {
+      throw new Error("invalid id");
+    }
 
-    // const pupil = this.
-    // }
+    const gradebook = this.gbmap.get(id);
+    const pupils = gradebook.pupils;
+    if(pupils.filter(pupil => pupil.id === pupilId).length === 0){
+      throw new Error('not a valid pupil id');
+    };
+    const obj = {};
+    pupils.forEach(pupil => {
+      if(pupil.id === pupilId){
+        obj.name = `${pupil.name.first} ${pupil.name.last}`,
+        obj.records = gradebook.records;
+      }
+    });
+
+    return obj;
+    }
 
     readAll(gbId){
       if (gbId === undefined || typeof gbId !== "string") {
@@ -86,14 +95,15 @@ export default class Gradebooks{
     if (!this.gbmap.has(gbId)) {
       throw new Error("invalid id");
     }
-      const pupilsArr = [];
-      this.gbmap.forEach(gb => {
-        if(gb.id === gbId){
-          pupilsArr.push(gb.pupils);
-        }
-      });
+    const pupilsArr = [];
+    this.gbmap.forEach(gb => {
+      if(gb.id === gbId){
+        pupilsArr.push(gb.pupils);
+      }
+    });
 
-      return pupilsArr;
+    return pupilsArr;
+ 
     }
 
     clear(){
