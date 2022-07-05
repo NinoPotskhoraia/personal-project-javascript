@@ -12,24 +12,24 @@ var __assign = (this && this.__assign) || function () {
 };
 exports.__esModule = true;
 exports.Teachers = void 0;
-function isDate(date) {
-    if (isNaN(Date.parse(date))) {
-        throw new Error('dateOfBirth parameter must be a date string');
-    }
-}
-function hasId(id) {
-    if (!this.tmap.has(id)) {
-        throw new Error("invalid id");
-    }
-    ;
-}
 var Teachers = /** @class */ (function () {
     function Teachers() {
         this._counter = 0;
         this.tmap = new Map();
     }
+    Teachers.prototype.isDate = function (date) {
+        if (isNaN(Date.parse(date))) {
+            throw new Error('dateOfBirth parameter must be a date string');
+        }
+    };
+    Teachers.prototype.hasId = function (id) {
+        if (!this.tmap.has(id)) {
+            throw new Error("invalid id");
+        }
+        ;
+    };
     Teachers.prototype.add = function (teacher) {
-        isDate(teacher.dateOfBirth);
+        this.isDate(teacher.dateOfBirth);
         var id = 'T' + this._counter++;
         this.tmap.set(id, teacher);
         return id;
@@ -38,15 +38,15 @@ var Teachers = /** @class */ (function () {
         return __assign(__assign({}, this.tmap.get(id)), { id: id });
     };
     Teachers.prototype.update = function (id, update) {
-        isDate(update.dateOfBirth);
-        hasId(id);
+        this.isDate(update.dateOfBirth);
+        this.hasId(id);
         var teacher = this.read(id);
         delete teacher.id;
         this.tmap.set(id, __assign(__assign({}, teacher), update));
         return id;
     };
     Teachers.prototype.remove = function (id) {
-        hasId(id);
+        this.hasId(id);
         this.tmap["delete"](id);
     };
     return Teachers;

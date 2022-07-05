@@ -17,6 +17,12 @@ var Groups = /** @class */ (function () {
         this._counter = 0;
         this.gmap = new Map();
     }
+    Groups.prototype._hasId = function (id) {
+        if (!this.gmap.has(id)) {
+            throw new Error("invalid id");
+        }
+        ;
+    };
     Groups.prototype.add = function (room) {
         var id = 'G' + this._counter++;
         var groupTemplate = {
@@ -28,17 +34,13 @@ var Groups = /** @class */ (function () {
         return id;
     };
     Groups.prototype.addPupil = function (groupId, pupil) {
-        if (!this.gmap.has(groupId)) {
-            throw new Error('not a valid group');
-        }
+        this._hasId(groupId);
         var group = this.gmap.get(groupId);
         group.pupils.push(pupil);
         return pupil;
     };
     Groups.prototype.removePupil = function (groupId, pupilId) {
-        if (!this.gmap.has(groupId)) {
-            throw new Error('invalid id');
-        }
+        this._hasId(groupId);
         var group = this.gmap.get(groupId);
         if (group.pupils === undefined) {
             throw new Error('there are no pupils in this group');
@@ -54,17 +56,13 @@ var Groups = /** @class */ (function () {
         group.pupils = slicedArr;
     };
     Groups.prototype.update = function (id, roomObj) {
-        if (!this.gmap.has(id)) {
-            throw new Error('invalid id');
-        }
+        this._hasId(id);
         var group = this.gmap.get(id);
         group.room = roomObj.room;
         return group;
     };
     Groups.prototype.read = function (id) {
-        if (!this.gmap.has(id)) {
-            throw new Error('not a valid group');
-        }
+        this._hasId(id);
         var group = this.gmap.get(id);
         return __assign({ id: id }, group);
     };

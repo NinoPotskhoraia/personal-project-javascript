@@ -12,7 +12,6 @@ var __assign = (this && this.__assign) || function () {
 };
 exports.__esModule = true;
 exports.LMS = void 0;
-var subject_js_1 = require("../subject/subject.js");
 var LMS = /** @class */ (function () {
     function LMS() {
         this.map = new Map();
@@ -46,17 +45,3 @@ var LMS = /** @class */ (function () {
     return LMS;
 }());
 exports.LMS = LMS;
-var history = new subject_js_1.Subject({
-    title: 'History',
-    lessons: 24
-});
-var math = new subject_js_1.Subject({
-    title: 'history',
-    lessons: 34
-});
-var lms = new LMS();
-console.log(lms.add(history));
-console.log(lms.add(math));
-// console.log(lms.remove(history));
-console.log(lms.verify(history));
-console.log(lms.readAll());
