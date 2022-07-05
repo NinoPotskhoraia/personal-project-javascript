@@ -65,16 +65,15 @@ export class Gradebooks{
     throw new Error('not a valid pupil id');
   };
   
-   pupils.forEach(pupil => {
-       let obj:Read={
-          
-       }
-       obj.name = `${pupil.name.first} ${pupil.name.last}`,
-       obj.records = gradebook.records;
+  const obj = {};
+  pupils.forEach(pupil => {
+    if(pupil.id === pupilId){
+      obj.name = `${pupil.name.first} ${pupil.name.last}`,
+      obj.records = gradebook.records;
+    }
+  });
 
-   });
-
-   return obj;
+  return obj;
    }
 
    readAll(gbId:string){
